@@ -35,6 +35,10 @@ class Tree {
   insert(value) {
     return insertValue(this.root, value);
   }
+
+  delete(value) {
+    return deleteValue(this.root, value);
+  }
 }
 
 function insertValue(obj, value) {
@@ -48,6 +52,40 @@ function insertValue(obj, value) {
     obj.left = insertValue(obj.left, value);
   }
   return obj;
+}
+
+function deleteValue(obj, value) {
+  if (obj === null) {
+    return obj;
+  } 
+  if (obj.data < value) {
+    obj.right = deleteValue(obj.right, value);
+  } else if (obj.data > value) {
+    obj.left = deleteValue(obj.left, value);
+  } else {
+    if (obj.left === null) {
+      let temp = obj.right;
+      obj = null;
+      return temp;
+    } else if (obj.right === null) {
+      let temp = obj.left;
+      obj = null;
+      return temp;
+    }
+    temp = minValueNode(obj.right);
+    obj.data = temp.data;
+    obj.right = deleteValue(obj.right, temp.data);
+  }
+
+  return obj;
+}
+
+function minValueNode(obj) {
+  let node = obj;
+  while (node.left !== null) {
+    node = node.left;
+  }
+  return node;
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -66,4 +104,6 @@ console.log(arr.filter((value, index) => arr.indexOf(value) === index).sort((a, 
 let binaryTree = new Tree(arr);
 console.log(prettyPrint(binaryTree.root));
 binaryTree.insert(10);
+console.log(prettyPrint(binaryTree.root));
+binaryTree.delete(8);
 console.log(prettyPrint(binaryTree.root));
