@@ -1,6 +1,6 @@
 class Node {
   constructor(value) {
-    this.value = value;
+    this.data = value;
     this.left = null;
     this.right = null;
   }
@@ -31,6 +31,23 @@ class Tree {
 
     return root;
   }  
+
+  insert(value) {
+    return insertValue(this.root, value);
+  }
+}
+
+function insertValue(obj, value) {
+  if (obj === null) {
+    return new Node(value);
+  }
+  if (obj.data === value) return obj;
+  if (obj.data < value) {
+    obj.right = insertValue(obj.right, value);
+  } else if (obj.data > value) {
+    obj.left = insertValue(obj.left, value);
+  }
+  return obj;
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -43,8 +60,10 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
   }
 }
 
-let arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 324, 1]
+let arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 
 console.log(arr.filter((value, index) => arr.indexOf(value) === index).sort((a, b) => a > b ? 1 : -1));
 let binaryTree = new Tree(arr);
-console.log(binaryTree.root);
+console.log(prettyPrint(binaryTree.root));
+binaryTree.insert(10);
+console.log(prettyPrint(binaryTree.root));
