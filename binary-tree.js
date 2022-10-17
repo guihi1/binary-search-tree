@@ -39,6 +39,22 @@ class Tree {
   delete(value) {
     return deleteValue(this.root, value);
   }
+
+  find(value) {
+    return findValue(this.root, value);
+  }
+
+}
+
+function findValue(obj, value) {
+  if (obj === null || obj.data === value) {
+    return obj;
+  }
+  if (obj.data < value) {
+    return findValue(obj.right, value);
+  } else {
+    return findValue(obj.left, value);
+  }
 }
 
 function insertValue(obj, value) {
@@ -107,3 +123,4 @@ binaryTree.insert(10);
 console.log(prettyPrint(binaryTree.root));
 binaryTree.delete(8);
 console.log(prettyPrint(binaryTree.root));
+console.log(prettyPrint(binaryTree.find(23)));
