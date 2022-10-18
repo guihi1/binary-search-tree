@@ -81,6 +81,28 @@ class Tree {
     return preorderRec(this.root, arr, func);
   }
 
+  inorder(func) {
+    let arr = [];
+    return inorderRec(this.root, arr, func);
+  }
+}
+
+function inorderRec(obj, arr, func) {
+  if (obj === null) {
+    return obj;
+  } else {
+    inorderRec(obj.left, arr, func);
+    arr.push(obj.data);
+    if (func !== undefined) {
+      obj.data = func(obj.data);
+    }
+    inorderRec(obj.right, arr, func);
+  }
+  if (func === undefined) {
+    return arr;
+  } else {
+    return obj;
+  }
 }
 
 function preorderRec(obj, arr, func) {
@@ -181,3 +203,4 @@ console.log(prettyPrint(binaryTree.root));
 console.log(prettyPrint(binaryTree.find(23)));
 console.log(prettyPrint(binaryTree.levelOrder(data => data*2).root));
 console.log(prettyPrint(binaryTree.preorder(data => data/2)));
+console.log(prettyPrint(binaryTree.inorder(data => data*2)));
