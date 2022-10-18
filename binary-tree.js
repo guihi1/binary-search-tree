@@ -44,6 +44,37 @@ class Tree {
     return findValue(this.root, value);
   }
 
+  levelOrder(func) {
+    if (this.root === null) return this;
+    let queue = [];
+    let arr = [];
+    queue.push(this.root);
+    if (func === undefined) {
+      while (queue.length > 0) {
+        let currentNode = queue.shift();
+        arr.push(currentNode.data);
+        if (currentNode.left !== null) {
+          queue.push(currentNode.left);
+        }
+        if (currentNode.right !== null) {
+          queue.push(currentNode.right);
+        }
+      }
+      return arr;
+    } else {
+      while (queue.length > 0) {
+        let currentNode = queue.shift();
+        currentNode.data = func(currentNode.data);
+        if (currentNode.left !== null) {
+          queue.push(currentNode.left);
+        }
+        if (currentNode.right !== null) {
+          queue.push(currentNode.right);
+        }
+      }
+      return this;
+    }
+  }
 }
 
 function findValue(obj, value) {
@@ -124,3 +155,4 @@ console.log(prettyPrint(binaryTree.root));
 binaryTree.delete(8);
 console.log(prettyPrint(binaryTree.root));
 console.log(prettyPrint(binaryTree.find(23)));
+console.log(prettyPrint(binaryTree.levelOrder(data => data*2).root));
