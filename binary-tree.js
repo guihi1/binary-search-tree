@@ -75,6 +75,30 @@ class Tree {
       return this;
     }
   }
+
+  preorder(func) {
+    let arr = [];
+    return preorderRec(this.root, arr, func);
+  }
+
+}
+
+function preorderRec(obj, arr, func) {
+  if (obj === null) {
+    return obj;
+  } else {
+    arr.push(obj.data);
+    if (func !== undefined) {
+      obj.data = func(obj.data);
+    }
+    preorderRec(obj.left, arr, func);
+    preorderRec(obj.right, arr, func);
+  }
+  if (func === undefined) {
+    return arr;
+  } else {
+    return obj;
+  }
 }
 
 function findValue(obj, value) {
@@ -156,3 +180,4 @@ binaryTree.delete(8);
 console.log(prettyPrint(binaryTree.root));
 console.log(prettyPrint(binaryTree.find(23)));
 console.log(prettyPrint(binaryTree.levelOrder(data => data*2).root));
+console.log(prettyPrint(binaryTree.preorder(data => data/2)));
