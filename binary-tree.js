@@ -91,22 +91,41 @@ class Tree {
     return postorderRec(this.root, arr, func);
   }
 
+  height(value) {
+    let desiredNode = findValue(this.root, value);
+    return heightRec(desiredNode) - 1;
+  }
+
   depth(value) {
     return depthRec(this.root, value);
   }
 }
 
-function depthRec(obj, value, height = 0) {
+function heightRec(obj) {
+  if (obj === null) {
+    return 0;
+  } else {
+    let leftHeight = heightRec(obj.left);
+    let rightHeight = heightRec(obj.right);
+    if (leftHeight > rightHeight) {
+      return leftHeight + 1;
+    } else {
+      return rightHeight + 1;
+    }
+  }
+}
+
+function depthRec(obj, value, depth = 0) {
   if (obj === null) return 0;
   if (obj.data === value) {
-    return height;
+    return depth;
   }
   if (obj.data < value) {
-    height += 1;
-    return depthRec(obj.right, value, height);
+    depth += 1;
+    return depthRec(obj.right, value, depth);
   } else {
-    height += 1;
-    return depthRec(obj.left, value, height);
+    depth += 1;
+    return depthRec(obj.left, value, depth);
   }
 }
 
@@ -247,3 +266,4 @@ console.log(prettyPrint(binaryTree.preorder(data => data/2)));
 console.log(prettyPrint(binaryTree.inorder(data => data*2)));
 console.log(binaryTree.postorder());
 console.log(binaryTree.depth(14));
+console.log(binaryTree.height(134));
