@@ -90,6 +90,24 @@ class Tree {
     let arr = [];
     return postorderRec(this.root, arr, func);
   }
+
+  height(value) {
+    return heightRec(this.root, value);
+  }
+}
+
+function heightRec(obj, value, height = 1) {
+  if (obj === null) return 0;
+  if (obj.data === value) {
+    return height;
+  }
+  if (obj.data < value) {
+    height += 1;
+    return heightRec(obj.right, value, height);
+  } else {
+    height += 1;
+    return heightRec(obj.left, value, height);
+  }
 }
 
 function postorderRec(obj, arr, func) {
@@ -228,3 +246,4 @@ console.log(prettyPrint(binaryTree.levelOrder(data => data*2).root));
 console.log(prettyPrint(binaryTree.preorder(data => data/2)));
 console.log(prettyPrint(binaryTree.inorder(data => data*2)));
 console.log(binaryTree.postorder());
+console.log(binaryTree.height(18));
