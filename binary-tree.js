@@ -99,6 +99,14 @@ class Tree {
   depth(value) {
     return depthRec(this.root, value);
   }
+
+  isBalanced() {
+    if (treeHeight(this.root) && treeHeight(this.root.left) && treeHeight(this.root.right)) {
+      return true;
+    } else {
+      return treeHeight(this.root);
+    }
+  }
 }
 
 function heightRec(obj) {
@@ -126,6 +134,19 @@ function depthRec(obj, value, depth = 0) {
   } else {
     depth += 1;
     return depthRec(obj.left, value, depth);
+  }
+}
+
+function treeHeight(obj) {
+  if (obj === null) return 0;
+  let leftHeight = treeHeight(obj.left);
+  let rightHeight = treeHeight(obj.right);
+
+  if (Math.abs(leftHeight - rightHeight) < 2) {
+    return true;
+  } else {
+    console.log(Math.abs(leftHeight - rightHeight));
+    return false;
   }
 }
 
@@ -267,3 +288,4 @@ console.log(prettyPrint(binaryTree.inorder(data => data*2)));
 console.log(binaryTree.postorder());
 console.log(binaryTree.depth(14));
 console.log(binaryTree.height(134));
+console.log(binaryTree.isBalanced());
