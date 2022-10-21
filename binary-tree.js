@@ -101,11 +101,18 @@ class Tree {
   }
 
   isBalanced() {
-    if (treeHeight(this.root) && treeHeight(this.root.left) && treeHeight(this.root.right)) {
+    let leftHeight = treeHeight(this.root.left);
+    let rightHeight = treeHeight(this.root.right);
+
+    if (Math.abs(leftHeight - rightHeight) < 2) {
       return true;
     } else {
-      return treeHeight(this.root);
+      return false;
     }
+  }
+
+  rebalance() {
+      return new Tree(this.levelOrder());
   }
 }
 
@@ -139,15 +146,7 @@ function depthRec(obj, value, depth = 0) {
 
 function treeHeight(obj) {
   if (obj === null) return 0;
-  let leftHeight = treeHeight(obj.left);
-  let rightHeight = treeHeight(obj.right);
-
-  if (Math.abs(leftHeight - rightHeight) < 2) {
-    return true;
-  } else {
-    console.log(Math.abs(leftHeight - rightHeight));
-    return false;
-  }
+  return Math.max(treeHeight(obj.left), treeHeight(obj.right)) + 1;
 }
 
 function postorderRec(obj, arr, func) {
@@ -289,3 +288,14 @@ console.log(binaryTree.postorder());
 console.log(binaryTree.depth(14));
 console.log(binaryTree.height(134));
 console.log(binaryTree.isBalanced());
+
+let arr2 = [3, 1, 3, 2];
+
+let binaryTree2 = new Tree(arr2);
+console.log(prettyPrint(binaryTree2.root));
+binaryTree2.root.left.left = new Node(6); 
+binaryTree2.root.left.left.left = new Node(9);
+console.log(prettyPrint(binaryTree2.root));
+console.log(binaryTree2.isBalanced());
+console.log(binaryTree2.levelOrder());
+console.log(prettyPrint(binaryTree2.rebalance().root));
