@@ -6,7 +6,7 @@ class Node {
   }
 }
 
-class Tree {
+export default class Tree {
   constructor(arr) {
     let sortedArr = arr.filter((value, index) => arr.indexOf(value) === index)
       .sort((a, b) => a > b ? 1 : -1);
@@ -245,7 +245,7 @@ function deleteValue(obj, value) {
       obj = null;
       return temp;
     }
-    temp = minValueNode(obj.right);
+    let temp = minValueNode(obj.right);
     obj.data = temp.data;
     obj.right = deleteValue(obj.right, temp.data);
   }
@@ -261,7 +261,7 @@ function minValueNode(obj) {
   return node;
 }
 
-const prettyPrint = (node, prefix = '', isLeft = true) => {
+export const prettyPrint = (node, prefix = '', isLeft = true) => {
   if (node.right !== null) {
     prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
   }
@@ -270,32 +270,3 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
     prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
   }
 }
-
-let arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
-
-console.log(arr.filter((value, index) => arr.indexOf(value) === index).sort((a, b) => a > b ? 1 : -1));
-let binaryTree = new Tree(arr);
-console.log(prettyPrint(binaryTree.root));
-binaryTree.insert(10);
-console.log(prettyPrint(binaryTree.root));
-binaryTree.delete(8);
-console.log(prettyPrint(binaryTree.root));
-console.log(prettyPrint(binaryTree.find(23)));
-console.log(prettyPrint(binaryTree.levelOrder(data => data*2).root));
-console.log(prettyPrint(binaryTree.preorder(data => data/2)));
-console.log(prettyPrint(binaryTree.inorder(data => data*2)));
-console.log(binaryTree.postorder());
-console.log(binaryTree.depth(14));
-console.log(binaryTree.height(134));
-console.log(binaryTree.isBalanced());
-
-let arr2 = [3, 1, 3, 2];
-
-let binaryTree2 = new Tree(arr2);
-console.log(prettyPrint(binaryTree2.root));
-binaryTree2.root.left.left = new Node(6); 
-binaryTree2.root.left.left.left = new Node(9);
-console.log(prettyPrint(binaryTree2.root));
-console.log(binaryTree2.isBalanced());
-console.log(binaryTree2.levelOrder());
-console.log(prettyPrint(binaryTree2.rebalance().root));
